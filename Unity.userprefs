@@ -1,0 +1,16 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Physics Platformer Kit/Scripts/Throwing.cs">
+    <Files>
+      <File FileName="Assets/00_Everything/Scripts/EdwonInControlProfile.cs" Line="14" Column="14" />
+      <File FileName="Assets/InControl/Examples/SimpleExample.cs" Line="1" Column="1" />
+      <File FileName="Assets/00_Everything/Scripts/EdwonInputManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/Physics Platformer Kit/Scripts/Health.cs" Line="41" Column="37" />
+      <File FileName="Assets/Physics Platformer Kit/Scripts/Throwing.cs" Line="92" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

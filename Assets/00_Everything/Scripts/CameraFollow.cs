@@ -17,12 +17,17 @@ public class CameraFollow : MonoBehaviour
 	
 	private Transform followTarget;
 	private bool camColliding;
-	
+
+	private GameManager gameManager;
+
+
 	//setup objects
 	void Awake()
 	{
 		InputManager.Setup();
-		InputManager.AttachDevice( new UnityInputDevice (new EdwonInControlProfile()));
+//		InputManager.AttachDevice( new UnityInputDevice (new EdwonInControlProfile()));
+
+		gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
 		followTarget = new GameObject().transform;	//create empty gameObject as camera target, this will follow and rotate around the player
 		followTarget.name = "Camera Target";
@@ -40,7 +45,10 @@ public class CameraFollow : MonoBehaviour
 	void Update()
 	{
 		InputManager.Update();
-		inputDevice = InputManager.ActiveDevice;
+		if (gameManager.singlePlayer == false)
+		{
+			inputDevice = InputManager.ActiveDevice;
+		}
 
 		if (!target)
 			return;
@@ -90,7 +98,7 @@ public class CameraFollow : MonoBehaviour
 			float axisY = Input.GetAxis ("Mouse Y") * inputRotationSpeed * Time.deltaTime;
 			followTarget.RotateAround (target.position, transform.right, -axisY);
 		}
-		else
+		else if (gameManager.singlePlayer == false)
 		{
 			//keyboard camera rotation look
 //			float axis = Input.GetAxis ("CamHorizontal") * inputRotationSpeed * Time.deltaTime;

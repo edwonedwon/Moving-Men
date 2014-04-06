@@ -46,35 +46,15 @@ public class PlayerMove : MonoBehaviour
 	private Vector3 direction, moveDirection, screenMovementForward, screenMovementRight, movingObjSpeed;
 
 	private PlayerManager playerManager;
-	private GameManager gameManager;
 	private CharacterMotor characterMotor;
 	private EnemyAI enemyAI;
 	private DealDamage dealDamage;
 
 	//setup
 	void Awake()
-	{	// inControl setup
+	{
 		InputManager.Setup();
-//		InputManager.AttachDevice( new UnityInputDevice (new EdwonInControlProfile()));
-
-		//usual setup
-		mainCam = GameObject.FindGameObjectWithTag("MainCamera").transform;
-		playerManager = GetComponent<PlayerManager>();
-		dealDamage = GetComponent<DealDamage>();
-		characterMotor = GetComponent<CharacterMotor>();
-		gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-
-		// single or multiple controllers logic
-		if (gameManager.singlePlayer == true)
-		{
-			inputDevice = InputManager.Devices[0];
-//			Debug.Log (InputManager.Devices[0].Meta);
-		} else if (gameManager.singlePlayer == false)
-		{
-//			inputDevice = InputManager.Devices[playerManager.playerIndex-1];
-			inputDevice = InputManager.ActiveDevice;
-		}
-
+		InputManager.AttachDevice( new UnityInputDevice (new EdwonInControlProfile()));
 
 		//create single floorcheck in centre of object, if none are assigned
 		if(!floorChecks)
@@ -95,21 +75,24 @@ public class PlayerMove : MonoBehaviour
 			tag = "Player";
 			Debug.LogWarning ("PlayerMove script assigned to object without the tag 'Player', tag has been assigned automatically", transform);
 		}
-
+		//usual setup
+		mainCam = GameObject.FindGameObjectWithTag("MainCamera").transform;
+		playerManager = GetComponent<PlayerManager>();
+		dealDamage = GetComponent<DealDamage>();
+		characterMotor = GetComponent<CharacterMotor>();
 		//gets child objects of floorcheckers, and puts them in an array
 		//later these are used to raycast downward and see if we are on the ground
 		floorCheckers = new Transform[floorChecks.childCount];
 		for (int i=0; i < floorCheckers.Length; i++)
 			floorCheckers[i] = floorChecks.GetChild(i);
 	}
-
-	float h;
-	float v;
-
+	
 	//get state of player, values and input
 	void Update()
 	{	
 		InputManager.Update();
+		inputDevice = InputManager.Devices[playerManager.playerIndex-1];
+
 		//handle jumping
 		JumpCalculations ();
 		//adjust movement values if we're in the air or on the ground
@@ -125,32 +108,8 @@ public class PlayerMove : MonoBehaviour
 		//get movement input, set direction to move in
 //		float h = Input.GetAxisRaw ("Horizontal");
 //		float v = Input.GetAxisRaw ("Vertical");
-//		Debug.Log ("single player mode: " + gameManager.singlePlayer);
-//		Debug.Log ("player: " + playerManager.playerIndex);
-		if (gameManager.singlePlayer == true && playerManager.playerIndex == 1)
-		{
-			Debug.Log ("single controller left");
-			// single controller left stick
-			h = inputDevice.LeftStickX;
-			v = inputDevice.LeftStickY;
-			Debug.Log ("h: " + h + "v: " + v);
-
-		} else if (gameManager.singlePlayer == true && playerManager.playerIndex == 2)
-		{
-			Debug.Log ("single controller right");
-			// single controller right stick
-			h = inputDevice.RightStickX;
-			v = inputDevice.RightStickY;
-			Debug.Log ("h: " + h + "v: " + v);
-		} else if (gameManager.singlePlayer == false)
-		{
-			Debug.Log ("multi controllers");
-			// multiple controllers
-			h = inputDevice.LeftStickX;
-			v = inputDevice.LeftStickY;
-			Debug.Log ("h: " + h + "v: " + v);
-
-		}
+		float h = inputDevice.LeftStickX;
+		float v = inputDevice.LeftStickY;
 		
 		//only apply vertical input to movemement, if player is not sidescroller
 		if(!sidescroller)

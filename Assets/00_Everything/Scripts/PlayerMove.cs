@@ -54,9 +54,7 @@ public class PlayerMove : MonoBehaviour
 
 	//setup
 	void Awake()
-	{	// inControl setup
-
-		InputManager.Setup();
+	{	
 //		InputManager.AttachDevice( new UnityInputDevice (new EdwonInControlProfile()));
 
 		//usual setup
@@ -65,8 +63,6 @@ public class PlayerMove : MonoBehaviour
 //		dealDamage = GetComponent<DealDamage>();
 		characterMotor = GetComponent<CharacterMotor>();
 		gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-
-		inputDevice = GetInputDevice();
 
 		//create single floorcheck in centre of object, if none are assigned
 		if(!floorChecks)
@@ -94,20 +90,18 @@ public class PlayerMove : MonoBehaviour
 		for (int i=0; i < floorCheckers.Length; i++)
 			floorCheckers[i] = floorChecks.GetChild(i);
 
-		GetInputDevice();
-
 	}
 
 	InputDevice GetInputDevice()
 	{
 		if (gameManager.singlePlayer)
 	    {
-			return InputManager.Devices[0];
+			return InputManager.ActiveDevice;
 	    }
 		else
 		{
-			return (InputManager.Devices.Count > playerManager.playerIndex) ?
-				InputManager.Devices[playerManager.playerIndex]: null;
+			return (InputManager.Devices.Count > playerManager.playerIndex-1) ?
+				InputManager.Devices[playerManager.playerIndex-1]: null;
 		}
 	}
 
@@ -118,6 +112,8 @@ public class PlayerMove : MonoBehaviour
 	void Update()
 	{	
 		InputManager.Update();
+		inputDevice = GetInputDevice();
+
 		//handle jumping
 		JumpCalculations ();
 		//adjust movement values if we're in the air or on the ground
@@ -148,7 +144,7 @@ public class PlayerMove : MonoBehaviour
 		{
 //			Debug.Log ("single controller right");
 			// single controller right stick
-			Debug.Log (inputDevice.RightStickX);
+//			Debug.Log (inputDevice.RightStickX);
 			h = inputDevice.RightStickX;
 			v = inputDevice.RightStickY;
 //			Debug.Log ("h: " + h + " v: " + v);

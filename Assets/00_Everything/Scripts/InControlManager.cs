@@ -7,7 +7,7 @@ public class InControlManager : MonoBehaviour
 	void Start()
 	{
 		InputManager.Setup();
-		Debug.Log( "InControl (version " + InputManager.Version + ")" );
+//		Debug.Log( "InControl (version " + InputManager.Version + ")" );
 	}
 
 

@@ -129,32 +129,22 @@ public class PlayerMove : MonoBehaviour
 		//get movement input, set direction to move in
 //		float h = Input.GetAxisRaw ("Horizontal");
 //		float v = Input.GetAxisRaw ("Vertical");
-//		Debug.Log ("single player mode: " + gameManager.singlePlayer);
-//		Debug.Log ("player: " + playerManager.playerIndex);
 
 		if (gameManager.singlePlayer && playerManager.playerIndex == 1)
 		{
-//			Debug.Log ("single controller left");
-			// single controller left stick
 			h = inputDevice.LeftStickX;
 			v = inputDevice.LeftStickY;
-//			Debug.Log ("h: " + h + " v: " + v);
 
-		} else if (gameManager.singlePlayer && playerManager.playerIndex == 2)
+		} 
+		else if (gameManager.singlePlayer && playerManager.playerIndex == 2)
 		{
-//			Debug.Log ("single controller right");
-			// single controller right stick
-//			Debug.Log (inputDevice.RightStickX);
 			h = inputDevice.RightStickX;
 			v = inputDevice.RightStickY;
-//			Debug.Log ("h: " + h + " v: " + v);
-		} else if (!gameManager.singlePlayer)
+		} 
+		else if (!gameManager.singlePlayer)
 		{
-//			Debug.Log ("multi controllers");
-			// multiple controllers
 			h = inputDevice.LeftStickX;
 			v = inputDevice.LeftStickY;
-//			Debug.Log ("h: " + h + " v: " + v);
 
 		}
 		
@@ -171,6 +161,9 @@ public class PlayerMove : MonoBehaviour
 	{
 		//are we grounded
 		grounded = IsGrounded ();
+//		if (playerManager.playerIndex == 1)
+//			Debug.Log (grounded);
+
 		//move, rotate, manage speed
 		characterMotor.MoveTo (moveDirection, curAccel, 0.7f, true);
 		if (rotateSpeed != 0 && direction.magnitude != 0)

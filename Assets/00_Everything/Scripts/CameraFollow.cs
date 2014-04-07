@@ -24,7 +24,6 @@ public class CameraFollow : MonoBehaviour
 	//setup objects
 	void Awake()
 	{
-		InputManager.Setup();
 //		InputManager.AttachDevice( new UnityInputDevice (new EdwonInControlProfile()));
 
 		gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -45,10 +44,9 @@ public class CameraFollow : MonoBehaviour
 	void Update()
 	{
 		InputManager.Update();
-		if (gameManager.singlePlayer == false)
-		{
-			inputDevice = InputManager.ActiveDevice;
-		}
+
+		inputDevice = InputManager.ActiveDevice;
+
 
 		if (!target)
 			return;
@@ -90,21 +88,22 @@ public class CameraFollow : MonoBehaviour
 		if (lockRotation)
 			followTarget.rotation = target.rotation;
 		
-		if(mouseFreelook)
-		{
-			//mouse look
-			float axisX = Input.GetAxis ("Mouse X") * inputRotationSpeed * Time.deltaTime;
-			followTarget.RotateAround (target.position,Vector3.up, axisX);
-			float axisY = Input.GetAxis ("Mouse Y") * inputRotationSpeed * Time.deltaTime;
-			followTarget.RotateAround (target.position, transform.right, -axisY);
-		}
-		else if (gameManager.singlePlayer == false)
-		{
+//		if(mouseFreelook)
+//		{
+//			//mouse look
+//			float axisX = Input.GetAxis ("Mouse X") * inputRotationSpeed * Time.deltaTime;
+//			followTarget.RotateAround (target.position,Vector3.up, axisX);
+//			float axisY = Input.GetAxis ("Mouse Y") * inputRotationSpeed * Time.deltaTime;
+//			followTarget.RotateAround (target.position, transform.right, -axisY);
+//		}
+//		else if (gameManager.singlePlayer == false)
+//		{
 			//keyboard camera rotation look
 //			float axis = Input.GetAxis ("CamHorizontal") * inputRotationSpeed * Time.deltaTime;
-			float axis = inputDevice.RightStickX * inputRotationSpeed * Time.deltaTime;
+			float bumperAxis = -inputDevice.RightBumper + inputDevice.LeftBumper;
+			float axis = bumperAxis * inputRotationSpeed * Time.deltaTime;
 			followTarget.RotateAround (target.position, Vector3.up, axis);
-		}
+//		}
 		
 		//where should the camera be next frame?
 		Vector3 nextFramePosition = Vector3.Lerp(transform.position, followTarget.position, followSpeed * Time.deltaTime);

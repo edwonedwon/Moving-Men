@@ -277,21 +277,45 @@ public class PlayerMove : MonoBehaviour
 		{
 			//and we press jump, or we pressed jump justt before hitting the ground
 //			if (Input.GetButtonDown ("Jump") || airPressTime + jumpLeniancy > Time.time)
-			if (inputDevice.Action1 || airPressTime + jumpLeniancy > Time.time)
-			{	
-				//increment our jump type if we haven't been on the ground for long
-				onJump = (groundedCount < jumpDelay) ? Mathf.Min(2, onJump + 1) : 0;
-				//execute the correct jump (like in mario64, jumping 3 times quickly will do higher jumps)
-				if (onJump == 0)
-						Jump (jumpForce);
-				else if (onJump == 1)
-						Jump (secondJumpForce);
-				else if (onJump == 2)
-						Jump (thirdJumpForce);
+			if (gameManager.singlePlayer)
+			{
+				if (playerManager.playerIndex == 1)
+				{
+					if (inputDevice.LeftTrigger || airPressTime + jumpLeniancy > Time.time)
+					JumpLogic ();
+
+				}
+				if (playerManager.playerIndex == 2)
+				{
+					if (inputDevice.RightTrigger || airPressTime + jumpLeniancy > Time.time)
+					JumpLogic ();
+
+				}
+			}
+			else
+			{
+				if (inputDevice.LeftTrigger || airPressTime + jumpLeniancy > Time.time)
+				{	
+					JumpLogic ();
+				}
 			}
 		}
 	}
-	
+
+	public void JumpLogic ()
+	{
+		//increment our jump type if we haven't been on the ground for long
+		onJump = (groundedCount < jumpDelay) ? Mathf.Min(2, onJump + 1) : 0;
+		//execute the correct jump (like in mario64, jumping 3 times quickly will do higher jumps)
+		if (onJump == 0)
+			Jump (jumpForce);
+		else if (onJump == 1)
+			Jump (secondJumpForce);
+		else if (onJump == 2)
+			Jump (thirdJumpForce);
+	}
+
+
 	//push player at jump force
 	public void Jump(Vector3 jumpVelocity)
 	{

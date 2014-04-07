@@ -65,24 +65,6 @@ public class PlayerMove : MonoBehaviour
 //		dealDamage = GetComponent<DealDamage>();
 		characterMotor = GetComponent<CharacterMotor>();
 		gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-//
-//		// single or multiple controllers logic
-//		if (gameManager.singlePlayer == true)
-//		{
-//			inputDevice = InputManager.Devices[0];
-////			Debug.Log (InputManager.Devices[0].Meta);
-//		} else if (gameManager.singlePlayer == false)
-//		{
-////			inputDevice = InputManager.Devices[playerManager.playerIndex-1];
-////			inputDevice = InputManager.ActiveDevice;
-//
-//			if (playerManager.playerIndex == 2)
-//			{
-//				inputDevice = InputManager.Devices[2];
-//			} else {
-//				inputDevice = InputManager.Devices[0];
-//			}
-//		}
 
 		inputDevice = GetInputDevice();
 
@@ -156,26 +138,27 @@ public class PlayerMove : MonoBehaviour
 
 		if (gameManager.singlePlayer && playerManager.playerIndex == 1)
 		{
-			Debug.Log ("single controller left");
+//			Debug.Log ("single controller left");
 			// single controller left stick
 			h = inputDevice.LeftStickX;
 			v = inputDevice.LeftStickY;
-			Debug.Log ("h: " + h + " v: " + v);
+//			Debug.Log ("h: " + h + " v: " + v);
 
 		} else if (gameManager.singlePlayer && playerManager.playerIndex == 2)
 		{
-			Debug.Log ("single controller right");
+//			Debug.Log ("single controller right");
 			// single controller right stick
+			Debug.Log (inputDevice.RightStickX);
 			h = inputDevice.RightStickX;
 			v = inputDevice.RightStickY;
-			Debug.Log ("h: " + h + " v: " + v);
+//			Debug.Log ("h: " + h + " v: " + v);
 		} else if (!gameManager.singlePlayer)
 		{
-			Debug.Log ("multi controllers");
+//			Debug.Log ("multi controllers");
 			// multiple controllers
 			h = inputDevice.LeftStickX;
 			v = inputDevice.LeftStickY;
-			Debug.Log ("h: " + h + " v: " + v);
+//			Debug.Log ("h: " + h + " v: " + v);
 
 		}
 		

@@ -5,7 +5,7 @@ using InControl;
 //handles player movement, utilising the CharacterMotor class
 [RequireComponent(typeof(CharacterMotor))]
 [RequireComponent(typeof(PlayerManager))]
-[RequireComponent(typeof(DealDamage))]
+//[RequireComponent(typeof(DealDamage))]
 [RequireComponent(typeof(AudioSource))]
 public class PlayerMove : MonoBehaviour 
 {
@@ -36,7 +36,7 @@ public class PlayerMove : MonoBehaviour
 	public float jumpDelay = 0.1f;							//how fast you need to jump after hitting the ground, to do the next type of jump
 	public float jumpLeniancy = 0.17f;						//how early before hitting the ground you can press jump, and still have it work
 	[HideInInspector]
-	public int onEnemyBounce;					
+//	public int onEnemyBounce;					
 	
 	private int onJump;
 	private bool grounded;
@@ -48,33 +48,43 @@ public class PlayerMove : MonoBehaviour
 	private PlayerManager playerManager;
 	private GameManager gameManager;
 	private CharacterMotor characterMotor;
-	private EnemyAI enemyAI;
-	private DealDamage dealDamage;
+//	private EnemyAI enemyAI;
+//	private DealDamage dealDamage;
+
 
 	//setup
 	void Awake()
 	{	// inControl setup
+
 		InputManager.Setup();
 //		InputManager.AttachDevice( new UnityInputDevice (new EdwonInControlProfile()));
 
 		//usual setup
 		mainCam = GameObject.FindGameObjectWithTag("MainCamera").transform;
 		playerManager = GetComponent<PlayerManager>();
-		dealDamage = GetComponent<DealDamage>();
+//		dealDamage = GetComponent<DealDamage>();
 		characterMotor = GetComponent<CharacterMotor>();
 		gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+//
+//		// single or multiple controllers logic
+//		if (gameManager.singlePlayer == true)
+//		{
+//			inputDevice = InputManager.Devices[0];
+////			Debug.Log (InputManager.Devices[0].Meta);
+//		} else if (gameManager.singlePlayer == false)
+//		{
+////			inputDevice = InputManager.Devices[playerManager.playerIndex-1];
+////			inputDevice = InputManager.ActiveDevice;
+//
+//			if (playerManager.playerIndex == 2)
+//			{
+//				inputDevice = InputManager.Devices[2];
+//			} else {
+//				inputDevice = InputManager.Devices[0];
+//			}
+//		}
 
-		// single or multiple controllers logic
-		if (gameManager.singlePlayer == true)
-		{
-			inputDevice = InputManager.Devices[0];
-//			Debug.Log (InputManager.Devices[0].Meta);
-		} else if (gameManager.singlePlayer == false)
-		{
-//			inputDevice = InputManager.Devices[playerManager.playerIndex-1];
-			inputDevice = InputManager.ActiveDevice;
-		}
-
+		inputDevice = GetInputDevice();
 
 		//create single floorcheck in centre of object, if none are assigned
 		if(!floorChecks)
@@ -101,6 +111,22 @@ public class PlayerMove : MonoBehaviour
 		floorCheckers = new Transform[floorChecks.childCount];
 		for (int i=0; i < floorCheckers.Length; i++)
 			floorCheckers[i] = floorChecks.GetChild(i);
+
+		GetInputDevice();
+
+	}
+
+	InputDevice GetInputDevice()
+	{
+		if (gameManager.singlePlayer)
+	    {
+			return InputManager.Devices[0];
+	    }
+		else
+		{
+			return (InputManager.Devices.Count > playerManager.playerIndex) ?
+				InputManager.Devices[playerManager.playerIndex]: null;
+		}
 	}
 
 	float h;
@@ -127,28 +153,29 @@ public class PlayerMove : MonoBehaviour
 //		float v = Input.GetAxisRaw ("Vertical");
 //		Debug.Log ("single player mode: " + gameManager.singlePlayer);
 //		Debug.Log ("player: " + playerManager.playerIndex);
-		if (gameManager.singlePlayer == true && playerManager.playerIndex == 1)
+
+		if (gameManager.singlePlayer && playerManager.playerIndex == 1)
 		{
 			Debug.Log ("single controller left");
 			// single controller left stick
 			h = inputDevice.LeftStickX;
 			v = inputDevice.LeftStickY;
-			Debug.Log ("h: " + h + "v: " + v);
+			Debug.Log ("h: " + h + " v: " + v);
 
-		} else if (gameManager.singlePlayer == true && playerManager.playerIndex == 2)
+		} else if (gameManager.singlePlayer && playerManager.playerIndex == 2)
 		{
 			Debug.Log ("single controller right");
 			// single controller right stick
 			h = inputDevice.RightStickX;
 			v = inputDevice.RightStickY;
-			Debug.Log ("h: " + h + "v: " + v);
-		} else if (gameManager.singlePlayer == false)
+			Debug.Log ("h: " + h + " v: " + v);
+		} else if (!gameManager.singlePlayer)
 		{
 			Debug.Log ("multi controllers");
 			// multiple controllers
 			h = inputDevice.LeftStickX;
 			v = inputDevice.LeftStickY;
-			Debug.Log ("h: " + h + "v: " + v);
+			Debug.Log ("h: " + h + " v: " + v);
 
 		}
 		
@@ -217,15 +244,15 @@ public class PlayerMove : MonoBehaviour
 						rigidbody.AddForce (slide, ForceMode.Force);
 					}
 					//enemy bouncing
-					if (hit.transform.tag == "Enemy" && rigidbody.velocity.y < 0)
-					{
-						enemyAI = hit.transform.GetComponent<EnemyAI>();
-						enemyAI.BouncedOn();
-						onEnemyBounce ++;
-						dealDamage.Attack(hit.transform.gameObject, 1, 0f, 0f);
-					}
-					else
-						onEnemyBounce = 0;
+//					if (hit.transform.tag == "Enemy" && rigidbody.velocity.y < 0)
+//					{
+//						enemyAI = hit.transform.GetComponent<EnemyAI>();
+//						enemyAI.BouncedOn();
+//						onEnemyBounce ++;
+//						dealDamage.Attack(hit.transform.gameObject, 1, 0f, 0f);
+//					}
+//					else
+//						onEnemyBounce = 0;
 					//moving platforms
 					if (hit.transform.tag == "MovingPlatform" || hit.transform.tag == "Pushable")
 					{
@@ -263,8 +290,8 @@ public class PlayerMove : MonoBehaviour
 		}
 		//if we press jump in the air, save the time
 //		if (Input.GetButtonDown ("Jump") && !grounded)
-		if (inputDevice.Action1 && !grounded)
-			airPressTime = Time.time;
+//		if (inputDevice.Action1 && !grounded)
+//			airPressTime = Time.time;
 		
 		//if were on ground within slope limit
 		if (grounded && slope < slopeLimit)

@@ -98,10 +98,12 @@ public class PlayerMove : MonoBehaviour
 	    {
 			return InputManager.ActiveDevice;
 	    }
-		else
+		else 
 		{
-			return (InputManager.Devices.Count > playerManager.playerIndex-1) ?
-				InputManager.Devices[playerManager.playerIndex-1]: null;
+//			return (InputManager.Devices.Count > playerManager.playerIndex-1) ?
+//				InputManager.Devices[playerManager.playerIndex-1]: null;
+		
+			return InputManager.Devices[playerManager.controllerIndex];
 		}
 	}
 

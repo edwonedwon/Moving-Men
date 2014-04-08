@@ -46,20 +46,27 @@ public class PlayerGrab : MonoBehaviour {
 				Grab ();
 		}
 
-//		HeadFeedback();
+			HeadFeedback();
 	}
 
-//	void HeadFeedback()
-//	{
-//		if (canGrab == true)
-//		{
-//			headMaterial.color = Color.red;
-//		}
-//		else
-//		{
-//			headMaterial.color = Color.white;
-//		}
-//	}
+	void HeadFeedback()
+	{
+		if (grabState == "noGrab")
+		{
+			if (canGrab)
+			{
+				headMaterial.color = Color.red;
+			}
+			else
+			{
+				headMaterial.color = Color.white;
+			}
+		} 
+		else 
+		{
+			headMaterial.color = Color.white;
+		}
+	}
 
 	void Grab ()
 	{

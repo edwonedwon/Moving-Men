@@ -10,8 +10,8 @@ public class PlayerGrab : MonoBehaviour {
 	public Material feedbackMaterial;
 	ConfigurableJoint joint;
 
-	public bool canPressAction3;
-	public bool canPressAction2;
+	bool canPressAction3;
+	bool canPressAction2;
 
 	InputDevice inputDevice;
 	GameManager gameManager;
@@ -64,8 +64,13 @@ public class PlayerGrab : MonoBehaviour {
 		}
 		else// if multiple controllers
 		{
-			if (inputDevice.Action1)
+			if (canPressAction3 && inputDevice.Action3)
+			{
+				canPressAction3 = false;
 				Grab ();
+			}
+			if (!canPressAction3 && !inputDevice.Action3)
+				canPressAction3 = true;
 		}
 	}
 

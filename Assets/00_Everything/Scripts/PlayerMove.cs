@@ -30,6 +30,8 @@ public class PlayerMove : MonoBehaviour
 	public float movingPlatformFriction = 7.7f;				//you'll need to tweak this to get the player to stay on moving platforms properly
 	
 	//jumping
+	public bool canPressJump1;
+	public bool canPressJump2;
 	public Vector3 jumpForce =  new Vector3(0, 13, 0);		//normal jump force
 	public Vector3 secondJumpForce = new Vector3(0, 13, 0); //the force of a 2nd consecutive jump
 	public Vector3 thirdJumpForce = new Vector3(0, 13, 0);	//the force of a 3rd consecutive jump
@@ -55,6 +57,8 @@ public class PlayerMove : MonoBehaviour
 	//setup
 	void Awake()
 	{	
+		canPressJump1 = true;
+		canPressJump2 = true;
 //		InputManager.AttachDevice( new UnityInputDevice (new EdwonInControlProfile()));
 
 		//usual setup
@@ -274,27 +278,39 @@ public class PlayerMove : MonoBehaviour
 		{
 			//and we press jump, or we pressed jump justt before hitting the ground
 //			if (Input.GetButtonDown ("Jump") || airPressTime + jumpLeniancy > Time.time)
-			if (gameManager.singlePlayer)
+			if (gameManager.singlePlayer) // single player
 			{
 				if (playerManager.playerIndex == 1)
 				{
-					if (inputDevice.LeftTrigger || airPressTime + jumpLeniancy > Time.time)
-					JumpLogic ();
+					if (canPressJump1 && inputDevice.LeftTrigger || airPressTime + jumpLeniancy > Time.time)
+					{
+						canPressJump1 = false;
+						JumpLogic ();
+					}
+					if (!inputDevice.LeftTrigger)
+						canPressJump1 = true;
 
 				}
 				if (playerManager.playerIndex == 2)
 				{
-					if (inputDevice.RightTrigger || airPressTime + jumpLeniancy > Time.time)
-					JumpLogic ();
-
+					if (canPressJump2 && inputDevice.RightTrigger || airPressTime + jumpLeniancy > Time.time)
+					{
+						canPressJump2 = false;
+						JumpLogic ();
+					}
+					if (!inputDevice.LeftTrigger)
+						canPressJump2 = true;
 				}
 			}
-			else
+			else // multi player
 			{
-				if (inputDevice.LeftTrigger || airPressTime + jumpLeniancy > Time.time)
+				if (canPressJump1 && inputDevice.Action1 || airPressTime + jumpLeniancy > Time.time)
 				{	
+					canPressJump1 = false;
 					JumpLogic ();
 				}
+				if (!inputDevice.Action1)
+					canPressJump1 = true;
 			}
 		}
 	}

@@ -100,6 +100,10 @@ public class PlayerGrab : MonoBehaviour {
 	void GrabStart ()
 	{
 		grabState = "grabbing";
+		Transform handle = grabZone.transform.FindChild("handle");
+		Instantiate(Resources.Load("GrabFeedback"), handle.position, handle.rotation);
+		Vector3 newRotation = handle.eulerAngles + new Vector3(90,90,0);
+		Instantiate(Resources.Load("GrabFeedback"), handle.position, Quaternion.Euler(newRotation));
 		ConnectToGrabThing();
 		joint.xMotion = ConfigurableJointMotion.Locked;
 		joint.yMotion = ConfigurableJointMotion.Locked;

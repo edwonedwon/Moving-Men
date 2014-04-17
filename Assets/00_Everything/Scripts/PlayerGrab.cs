@@ -6,11 +6,12 @@ public class PlayerGrab : MonoBehaviour {
 
 	public string grabState; 
 	public Rigidbody grabThing;
+	public GameObject grabZone;
 	public Material feedbackMaterial;
 	ConfigurableJoint joint;
 
-	bool canPressAction3;
-	bool canPressAction2;
+	public bool canPressAction3;
+	public bool canPressAction2;
 
 	InputDevice inputDevice;
 	GameManager gameManager;
@@ -25,6 +26,8 @@ public class PlayerGrab : MonoBehaviour {
 		grabState = "grabbing";
 		canPressAction3 = true;
 		canPressAction2 = true;
+
+		ConnectToGrabThing();
 	}
 	
 	void Update ()
@@ -49,7 +52,7 @@ public class PlayerGrab : MonoBehaviour {
 				canPressAction3 = false;
 				Grab ();
 			}
-			if (inputDevice.Action2 && playerManager.playerIndex == 2)
+			if (canPressAction2 && inputDevice.Action2 && playerManager.playerIndex == 2)
 			{
 				canPressAction2 = false;
 				Grab ();
@@ -80,15 +83,15 @@ public class PlayerGrab : MonoBehaviour {
 
 	void Grab ()
 	{
-		print ("did grab");
+//		print ("did grab");
 		if (joint.connectedBody == null && grabState == "notGrabbingCanGrab")
 		{
-			print ("did grab start");
+//			print ("did grab start");
 			GrabStart ();
 		}
 		else
 		{
-			print ("did grab end");
+//			print ("did grab end");
 			GrabEnd ();
 		}
 	
@@ -97,10 +100,17 @@ public class PlayerGrab : MonoBehaviour {
 	void GrabStart ()
 	{
 		grabState = "grabbing";
-		joint.connectedBody = grabThing; 
+		ConnectToGrabThing();
 		joint.xMotion = ConfigurableJointMotion.Locked;
 		joint.yMotion = ConfigurableJointMotion.Locked;
 		joint.zMotion = ConfigurableJointMotion.Locked;
+	}
+
+	void ConnectToGrabThing ()
+	{
+		joint.connectedBody = grabThing;
+		// set the anchor to whatever grabzone's anchor that I'm standing in
+		joint.connectedAnchor = grabThing.transform.InverseTransformPoint(grabZone.transform.FindChild("anchor").position);
 	}
 
 	void GrabEnd ()
@@ -112,15 +122,22 @@ public class PlayerGrab : MonoBehaviour {
 		joint.zMotion = ConfigurableJointMotion.Free;
 	}
 
-	void OnTriggerEnter(Collider collider)
+	void OnTriggerStay(Collider collider)
 	{
-
 		if (grabState == "notGrabbing")
 		{
 			if (collider.tag == "GrabZone")
 			{
-				print ("entered grab zone");
+//				print ("entered grab zone");
 				grabState = "notGrabbingCanGrab";
+				grabZone = collider.gameObject;
+			}
+		}
+		else if (grabState == "grabbing")
+		{
+			if (collider.tag == "GrabZone")
+			{
+				grabZone = collider.gameObject;
 			}
 		}
 	}
@@ -130,7 +147,7 @@ public class PlayerGrab : MonoBehaviour {
 
 		if (collider.tag == "GrabZone")
 		{
-			print ("exited grab zone");
+//			print ("exited grab zone");
 			grabState = "notGrabbing";
 		}
 	}

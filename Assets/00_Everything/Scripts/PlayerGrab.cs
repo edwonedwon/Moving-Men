@@ -5,10 +5,12 @@ using InControl;
 public class PlayerGrab : MonoBehaviour {
 
 	public string grabState; 
-	public bool canGrab;
 	public Rigidbody grabThing;
-	public Material headMaterial;
+	public Material feedbackMaterial;
 	ConfigurableJoint joint;
+
+	bool canPressAction3;
+	bool canPressAction2;
 
 	InputDevice inputDevice;
 	GameManager gameManager;
@@ -20,62 +22,73 @@ public class PlayerGrab : MonoBehaviour {
 		playerManager = transform.parent.GetComponent<PlayerManager>();
 		joint = transform.parent.GetComponent<ConfigurableJoint>();
 
-		grabState = "grab";
+		grabState = "grabbing";
+		canPressAction3 = true;
+		canPressAction2 = true;
 	}
 	
 	void Update ()
 	{
+
 		InputManager.Update();
 		inputDevice = GetInputDevice();
 
-		UpdateControls ();
+		UpdateControls();
+		HeadFeedback();
+
+//		print (grabState);
+	
 	}
 
 	void UpdateControls ()
 	{
 		if (gameManager.singlePlayer)// if one controller
 		{
-			if (inputDevice.Action3 && playerManager.playerIndex == 1)
+			if (canPressAction3 && inputDevice.Action3 && playerManager.playerIndex == 1)
+			{
+				canPressAction3 = false;
 				Grab ();
+			}
 			if (inputDevice.Action2 && playerManager.playerIndex == 2)
+			{
+				canPressAction2 = false;
 				Grab ();
+			}
+			if (!canPressAction3 && !inputDevice.Action3  && playerManager.playerIndex == 1)
+				canPressAction3 = true;
+			if (!canPressAction2 && !inputDevice.Action2  && playerManager.playerIndex == 2)
+				canPressAction2 = true;
 		}
 		else// if multiple controllers
 		{
 			if (inputDevice.Action1)
 				Grab ();
 		}
-
-			HeadFeedback();
 	}
 
 	void HeadFeedback()
 	{
-		if (grabState == "noGrab")
+		if (grabState == "notGrabbingCanGrab")
 		{
-			if (canGrab)
-			{
-				headMaterial.color = Color.red;
-			}
-			else
-			{
-				headMaterial.color = Color.white;
-			}
+			feedbackMaterial.color = Color.red;
 		} 
 		else 
 		{
-			headMaterial.color = Color.white;
+			feedbackMaterial.color = Color.white;
 		}
 	}
 
 	void Grab ()
 	{
-		if (joint.connectedBody == null && canGrab == true)
+		print ("did grab");
+		if (joint.connectedBody == null && grabState == "notGrabbingCanGrab")
 		{
+			print ("did grab start");
 			GrabStart ();
 		}
 		else
 		{
+			print ("did grab end");
 			GrabEnd ();
 		}
 	
@@ -83,8 +96,7 @@ public class PlayerGrab : MonoBehaviour {
 
 	void GrabStart ()
 	{
-		canGrab = false;
-		grabState = "grab";
+		grabState = "grabbing";
 		joint.connectedBody = grabThing; 
 		joint.xMotion = ConfigurableJointMotion.Locked;
 		joint.yMotion = ConfigurableJointMotion.Locked;
@@ -93,26 +105,33 @@ public class PlayerGrab : MonoBehaviour {
 
 	void GrabEnd ()
 	{
-		grabState = "noGrab";
+		grabState = "notGrabbing";
 		joint.connectedBody = null;
 		joint.xMotion = ConfigurableJointMotion.Free;
 		joint.yMotion = ConfigurableJointMotion.Free;
 		joint.zMotion = ConfigurableJointMotion.Free;
 	}
 
-	void OnTriggerStay(Collider collider)
+	void OnTriggerEnter(Collider collider)
 	{
-		if (collider.tag == "GrabZone")
+
+		if (grabState == "notGrabbing")
 		{
-			canGrab = true;
+			if (collider.tag == "GrabZone")
+			{
+				print ("entered grab zone");
+				grabState = "notGrabbingCanGrab";
+			}
 		}
 	}
 
 	void OnTriggerExit(Collider collider)
 	{
+
 		if (collider.tag == "GrabZone")
 		{
-			canGrab = false;
+			print ("exited grab zone");
+			grabState = "notGrabbing";
 		}
 	}
 

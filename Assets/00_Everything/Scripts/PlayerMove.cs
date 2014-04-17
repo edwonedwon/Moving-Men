@@ -100,9 +100,11 @@ public class PlayerMove : MonoBehaviour
 	    }
 		else 
 		{
+			// THIS OLD CODE AUTOMATICALLY SET THE CONTROLLER BASED ON PLAYER INDEX, BUT MESSES UP SOMETIMES
 //			return (InputManager.Devices.Count > playerManager.playerIndex-1) ?
 //				InputManager.Devices[playerManager.playerIndex-1]: null;
 		
+			// THIS CODE ALLOWS YOU TO CHOSE THE CONTROLLER PER PLAYER
 			return InputManager.Devices[playerManager.controllerIndex];
 		}
 	}

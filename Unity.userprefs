@@ -2,8 +2,8 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/00_Everything/Scripts/PlayerGrab.cs">
     <Files>
-      <File FileName="Assets/00_Everything/Scripts/PlayerGrab.cs" Line="112" Column="51" />
-      <File FileName="Assets/00_Everything/Scripts/PlayerMove.cs" Line="312" Column="29" />
+      <File FileName="Assets/00_Everything/Scripts/PlayerGrab.cs" Line="67" Column="1" />
+      <File FileName="Assets/00_Everything/Scripts/PlayerMove.cs" Line="216" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -1,0 +1,223 @@
+fileFormatVersion: 2
+guid: 0d59f84ba8cb640b8a8d2351f0eb5499
+ModelImporter:
+  serializedVersion: 16
+  fileIDToRecycleName:
+    100000: CL_PM3D_ZSphere_1
+    100002: Head
+    100004: L_Arm
+    100006: L_EaL_1
+    100008: L_EaL_2
+    100010: L_Ear3
+    100012: L_Foot
+    100014: L_Hand
+    100016: L_Leg
+    100018: L_Wrist
+    100020: Null
+    100022: R_Arm
+    100024: R_Ear3
+    100026: R_Ear_1
+    100028: R_Ear_2
+    100030: R_Foot
+    100032: R_Hand
+    100034: R_Leg
+    100036: R_Wrist
+    100038: Root
+    100040: Root_2
+    100042: Spine_1
+    100044: Spine_2
+    100046: Spine_3
+    100048: Spine_4
+    100050: //RootNode
+    100052: L_Eye
+    100054: L_Eye_Pupil
+    100056: R_Eye
+    100058: R_Eye_Pupil
+    100060: Mouth
+    100062: Nose_1
+    400000: CL_PM3D_ZSphere_1
+    400002: Head
+    400004: L_Arm
+    400006: L_EaL_1
+    400008: L_EaL_2
+    400010: L_Ear3
+    400012: L_Foot
+    400014: L_Hand
+    400016: L_Leg
+    400018: L_Wrist
+    400020: Null
+    400022: R_Arm
+    400024: R_Ear3
+    400026: R_Ear_1
+    400028: R_Ear_2
+    400030: R_Foot
+    400032: R_Hand
+    400034: R_Leg
+    400036: R_Wrist
+    400038: Root
+    400040: Root_2
+    400042: Spine_1
+    400044: Spine_2
+    400046: Spine_3
+    400048: Spine_4
+    400050: //RootNode
+    400052: L_Eye
+    400054: L_Eye_Pupil
+    400056: R_Eye
+    400058: R_Eye_Pupil
+    400060: Mouth
+    400062: Nose_1
+    2300000: L_Eye
+    2300002: L_Eye_Pupil
+    2300004: R_Eye
+    2300006: R_Eye_Pupil
+    2300008: Mouth
+    2300010: Nose_1
+    3300000: L_Eye
+    3300002: L_Eye_Pupil
+    3300004: R_Eye
+    3300006: R_Eye_Pupil
+    3300008: Mouth
+    3300010: Nose_1
+    4300000: CL_PM3D_ZSphere_1
+    4300002: R_Eye
+    4300004: R_Eye_Pupil
+    4300006: L_Eye_Pupil
+    4300008: L_Eye
+    4300010: Mouth
+    4300012: Nose_1
+    7400000: C4D Animation Take
+    9500000: //RootNode
+    11100000: //RootNode
+    13700000: CL_PM3D_ZSphere_1
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: C4D Animation Take
+      takeName: C4D Animation Take
+      firstFrame: 0
+      lastFrame: 90
+      wrapMode: 2
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: CL_PM3D_ZSphere_1
+        weight: 1
+      - path: CL_PM3D_ZSphere_1/Null
+        weight: 1
+      - path: Root
+        weight: 1
+      - path: Root/Root_2
+        weight: 1
+      - path: Root/Root_2/L_Leg
+        weight: 1
+      - path: Root/Root_2/L_Leg/L_Foot
+        weight: 1
+      - path: Root/Root_2/R_Leg
+        weight: 1
+      - path: Root/Root_2/R_Leg/R_Foot
+        weight: 1
+      - path: Root/Root_2/Spine_1
+        weight: 1
+      - path: Root/Root_2/Spine_1/Spine_2
+        weight: 1
+      - path: Root/Root_2/Spine_1/Spine_2/Spine_3
+        weight: 1
+      - path: Root/Root_2/Spine_1/Spine_2/Spine_3/L_Arm
+        weight: 1
+      - path: Root/Root_2/Spine_1/Spine_2/Spine_3/L_Arm/L_Wrist
+        weight: 1
+      - path: Root/Root_2/Spine_1/Spine_2/Spine_3/L_Arm/L_Wrist/L_Hand
+        weight: 1
+      - path: Root/Root_2/Spine_1/Spine_2/Spine_3/R_Arm
+        weight: 1
+      - path: Root/Root_2/Spine_1/Spine_2/Spine_3/R_Arm/R_Wrist
+        weight: 1
+      - path: Root/Root_2/Spine_1/Spine_2/Spine_3/R_Arm/R_Wrist/R_Hand
+        weight: 1
+      - path: Root/Root_2/Spine_1/Spine_2/Spine_3/Spine_4
+        weight: 1
+      - path: Root/Root_2/Spine_1/Spine_2/Spine_3/Spine_4/Head
+        weight: 1
+      - path: Root/Root_2/Spine_1/Spine_2/Spine_3/Spine_4/Head/L_EaL_1
+        weight: 1
+      - path: Root/Root_2/Spine_1/Spine_2/Spine_3/Spine_4/Head/L_EaL_1/L_EaL_2
+        weight: 1
+      - path: Root/Root_2/Spine_1/Spine_2/Spine_3/Spine_4/Head/L_EaL_1/L_EaL_2/L_Ear3
+        weight: 1
+      - path: Root/Root_2/Spine_1/Spine_2/Spine_3/Spine_4/Head/R_Ear_1
+        weight: 1
+      - path: Root/Root_2/Spine_1/Spine_2/Spine_3/Spine_4/Head/R_Ear_1/R_Ear_2
+        weight: 1
+      - path: Root/Root_2/Spine_1/Spine_2/Spine_3/Spine_4/Head/R_Ear_1/R_Ear_2/R_Ear3
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .00999999978
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 1
+  additionalBone: 0
+  userData: 

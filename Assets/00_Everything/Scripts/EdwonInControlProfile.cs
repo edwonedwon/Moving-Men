@@ -35,24 +35,38 @@ namespace InControl
 				{
 					Handle = "AltFire",
 					Target = InputControlType.Action2,
-					Source = MouseButton2
+					Source = KeyCodeButton( KeyCode.RightShift)
 				},
 				new InputControlMapping
 				{
 					Handle = "Middle",
 					Target = InputControlType.Action3,
-					Source = MouseButton1
+					Source = KeyCodeButton( KeyCode.E )
 				},
 				new InputControlMapping
 				{
 					Handle = "Jump",
 					Target = InputControlType.Action4,
 					Source = KeyCodeButton( KeyCode.Space )
+				},
+				new InputControlMapping
+				{
+					Handle = "Left Trigger",
+					Target = InputControlType.LeftTrigger,
+					Source = KeyCodeButton(KeyCode.Q)
+				},
+				new InputControlMapping
+				{
+					Handle = "Right Trigger",
+					Target = InputControlType.RightTrigger,
+					Source = KeyCodeButton(KeyCode.RightAlt)
 				}
+
 			};
 
 			AnalogMappings = new[]
 			{
+
 				new InputControlMapping
 				{
 					Handle = "Move X",
@@ -69,15 +83,13 @@ namespace InControl
 				{
 					Handle = "Look X",
 					Target = InputControlType.RightStickX,
-					Source = MouseXAxis,
-					Raw    = true
+					Source = KeyCodeAxis( KeyCode.LeftArrow, KeyCode.RightArrow )
 				},
 				new InputControlMapping
 				{
 					Handle = "Look Y",
 					Target = InputControlType.RightStickY,
-					Source = MouseYAxis,
-					Raw    = true
+					Source = KeyCodeAxis( KeyCode.DownArrow, KeyCode.UpArrow )
 				},
 				new InputControlMapping
 				{

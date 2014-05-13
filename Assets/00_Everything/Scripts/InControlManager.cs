@@ -8,6 +8,9 @@ public class InControlManager : MonoBehaviour
 	{
 		InputManager.Setup();
 //		Debug.Log( "InControl (version " + InputManager.Version + ")" );
+
+		// Add a custom device profile.
+		InputManager.AttachDevice( new UnityInputDevice( new EdwonInControlProfile() ) );
 	}
 
 

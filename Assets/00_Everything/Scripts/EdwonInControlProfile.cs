@@ -60,7 +60,20 @@ namespace InControl
 					Handle = "Right Trigger",
 					Target = InputControlType.RightTrigger,
 					Source = KeyCodeButton(KeyCode.RightAlt)
+				},
+				new InputControlMapping
+				{
+					Handle = "Right Bumper",
+					Target = InputControlType.RightBumper,
+					Source = KeyCodeButton(KeyCode.RightCommand)
+				},
+				new InputControlMapping
+				{
+					Handle = "Left Bumper",
+					Target = InputControlType.LeftBumper,
+					Source = KeyCodeButton(KeyCode.LeftCommand)
 				}
+
 
 			};
 

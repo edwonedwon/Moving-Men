@@ -53,10 +53,16 @@ public class PlayerMove : MonoBehaviour
 //	private EnemyAI enemyAI;
 //	private DealDamage dealDamage;
 
+	void Start()
+	{
+		inputDevice = GetInputDevice();
+		Debug.Log(inputDevice.Name);
+	}
 
 	//setup
 	void Awake()
 	{	
+
 		canPressJump1 = true;
 		canPressJump2 = true;
 //		InputManager.AttachDevice( new UnityInputDevice (new EdwonInControlProfile()));
@@ -120,7 +126,6 @@ public class PlayerMove : MonoBehaviour
 	void Update()
 	{	
 		InputManager.Update();
-		inputDevice = GetInputDevice();
 
 		//handle jumping
 		JumpCalculations ();

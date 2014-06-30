@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using InControl;
 
@@ -176,8 +176,7 @@ public class PlayerGrab : MonoBehaviour {
 		}
 		else
 		{
-			return (InputManager.Devices.Count > playerManager.playerIndex-1) ?
-				InputManager.Devices[playerManager.playerIndex-1]: null;
+			return InputManager.Devices[playerManager.controllerIndex];
 		}
 	}
 }

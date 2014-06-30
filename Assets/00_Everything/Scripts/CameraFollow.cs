@@ -18,12 +18,26 @@ public class CameraFollow : MonoBehaviour
 	private Transform followTarget;
 	private bool camColliding;
 
+	Bounds playersBounds = new Bounds();
+	GameObject[] players = new GameObject[4];
+	GameObject playersParent;
+
+
 	private GameManager gameManager;
 
 
 	//setup objects
 	void Awake()
 	{
+		playersParent = GameObject.Find("Players");
+		// find all players and make a bounds around them
+		for (int i = 0; i < playersParent.transform.childCount ; i++)
+		{
+			players[i] = playersParent.transform.GetChild(0).gameObject;
+			playersBounds.Encapsulate(players[i].transform.position);
+//			Debug.Log (players[i]);
+		}
+
 //		InputManager.AttachDevice( new UnityInputDevice (new EdwonInControlProfile()));
 
 		gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -43,6 +57,14 @@ public class CameraFollow : MonoBehaviour
 	//run our camera functions each frame
 	void Update()
 	{
+		// WORKING ON CAMERA TRACKING OF BOTH PLAYERS
+//		for (int i = 0; i < playersParent.transform.childCount ; i++)
+//		{
+//			playersBounds.Encapsulate(players[i].transform.position);
+//		}
+//		Debug.Log(playersBounds.center);
+
+
 		InputManager.Update();
 
 		inputDevice = InputManager.ActiveDevice;

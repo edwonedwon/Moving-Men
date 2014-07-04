@@ -56,7 +56,7 @@ public class PlayerMove : MonoBehaviour
 	void Start()
 	{
 		inputDevice = GetInputDevice();
-		Debug.Log(inputDevice.Name);
+//		Debug.Log(inputDevice.Name);
 	}
 
 	//setup

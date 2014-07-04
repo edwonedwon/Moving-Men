@@ -66,27 +66,15 @@ namespace InControl
 				},
 				new InputControlMapping
 				{
-					Handle = "Start",
-					Target = InputControlType.Start,
-					Source = Button13
+					Handle = "Share",
+					Target = InputControlType.Share,
+					Source = Button8
 				},
 				new InputControlMapping
 				{
 					Handle = "Options",
 					Target = InputControlType.Select,
 					Source = Button9
-				},
-				new InputControlMapping
-				{
-					Handle = "Left Trigger",
-					Target = InputControlType.LeftTrigger,
-					Source = Button6
-				},
-				new InputControlMapping
-				{
-					Handle = "Right Trigger",
-					Target = InputControlType.RightTrigger,
-					Source = Button7
 				},
 				new InputControlMapping
 				{
@@ -99,7 +87,19 @@ namespace InControl
 					Handle = "Right Stick Button",
 					Target = InputControlType.RightStickButton,
 					Source = Button11
-				}
+				},
+				new InputControlMapping
+				{
+					Handle = "System",
+					Target = InputControlType.System,
+					Source = Button12
+				},
+				new InputControlMapping
+				{
+					Handle = "TouchPad Button",
+					Target = InputControlType.TouchPadTap,
+					Source = Button13
+				},
 			};
 
 			AnalogMappings = new[]
@@ -129,6 +129,22 @@ namespace InControl
 					Target = InputControlType.RightStickY,
 					Source = Analog5,
 					Invert = true
+				},
+				new InputControlMapping
+				{
+					Handle = "Left Trigger",
+					Target = InputControlType.LeftTrigger,
+					Source = Analog3,
+					SourceRange = InputControlMapping.Range.Complete,
+					TargetRange = InputControlMapping.Range.Positive,
+				},
+				new InputControlMapping
+				{
+					Handle = "Right Trigger",
+					Target = InputControlType.RightTrigger,
+					Source = Analog4,
+					SourceRange = InputControlMapping.Range.Complete,
+					TargetRange = InputControlMapping.Range.Positive,
 				},
 				new InputControlMapping
 				{

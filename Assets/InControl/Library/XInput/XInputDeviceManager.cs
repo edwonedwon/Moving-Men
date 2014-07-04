@@ -1,3 +1,4 @@
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -19,11 +20,11 @@ namespace InControl
 				devices.Add( new XInputDevice( deviceIndex ) );
 			}
 
-			Update( 0.0f, 0.0f );
+			Update( 0, 0.0f );
 		}
 
 
-		public override void Update( float updateTime, float deltaTime )
+		public override void Update( ulong updateTick, float deltaTime )
 		{
 			for (int deviceIndex = 0; deviceIndex < 4; deviceIndex++)
 			{
@@ -32,7 +33,7 @@ namespace InControl
 				// Unconnected devices won't be updated otherwise, so poll here.
 				if (!device.IsConnected)
 				{
-					device.Update( updateTime, deltaTime );
+					device.Update( updateTick, deltaTime );
 				}
 
 				if (device.IsConnected != deviceConnected[deviceIndex])
@@ -45,11 +46,12 @@ namespace InControl
 					{
 						InputManager.DetachDevice( device );
 					}
-					
+
 					deviceConnected[deviceIndex] = device.IsConnected;
 				}
 			}
 		}
 	}
 }
+#endif
 

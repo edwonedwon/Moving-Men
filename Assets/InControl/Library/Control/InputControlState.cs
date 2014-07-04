@@ -12,10 +12,24 @@ namespace InControl
 		public float Value;
 
 
+		public void Reset()
+		{
+			Value = 0.0f;
+			State = false;
+		}
+
+
 		public void Set( float value )
 		{
 			Value = value;
-			State = value != 0.0f;
+			State = !Mathf.Approximately( value, 0.0f );
+		}
+
+
+		public void Set( float value, float threshold )
+		{
+			Value = value;
+			State = Mathf.Abs( value ) > threshold;
 		}
 
 

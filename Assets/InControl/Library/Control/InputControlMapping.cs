@@ -23,11 +23,14 @@ namespace InControl
 		// Invert the final mapped value.
 		public bool Invert;
 
-		// Button means non-zero value will be snapped to -1 or 1.
-		public bool Button;
+		// Analog values will be multiplied by this number before processing.
+		public float Scale = 1.0f;
 
-		// Raw inputs won't be range remapped, smoothed or filtered.
+		// Raw inputs won't be processed except for scaling (mice and trackpads).
 		public bool Raw;
+
+		// This is primarily to fix a bug with the wired Xbox controller on Mac.
+		public bool IgnoreInitialZeroValue;
 
 		public Range SourceRange = Range.Complete;
 		public Range TargetRange = Range.Complete;
@@ -42,22 +45,22 @@ namespace InControl
 
 			if (Raw)
 			{
-				targetValue = value;
+				targetValue = value * Scale;
 			}
 			else
 			{
+				// Scale value and clamp to a legal range.
+				value = Mathf.Clamp( value * Scale, -1.0f, 1.0f );
+
+				// Values outside of source range are invalid and return zero.
 				if (value < SourceRange.Minimum || value > SourceRange.Maximum)
 				{
 					return 0.0f;
 				}
 
+				// Remap from source range to target range.
 				sourceValue = Mathf.InverseLerp( SourceRange.Minimum, SourceRange.Maximum, value );
 				targetValue = Mathf.Lerp( TargetRange.Minimum, TargetRange.Maximum, sourceValue );
-			}
-
-			if (Button && Mathf.Abs(targetValue) > float.Epsilon)
-			{
-				targetValue = Mathf.Sign( targetValue );
 			}
 
 			if (Invert ^ (IsYAxis && InputManager.InvertYAxis))
@@ -66,12 +69,6 @@ namespace InControl
 			}
 
 			return targetValue;
-		}
-
-
-		public bool TargetRangeIsNotComplete
-		{
-			get { return TargetRange != Range.Complete; }
 		}
 
 

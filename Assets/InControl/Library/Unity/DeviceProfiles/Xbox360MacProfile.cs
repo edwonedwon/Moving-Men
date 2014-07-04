@@ -20,16 +20,16 @@ namespace InControl
 
 			JoystickNames = new[]
 			{
-				"",
+				"", // Yes, really.
 				"Microsoft Wireless 360 Controller",
 				"Mad Catz, Inc. Mad Catz FPS Pro GamePad",
-				"Logitech Gamepad F310"
+				"\u00A9Microsoft Corporation Controller"
 			};
 
-			RegexName = "360";
+			LastResortRegex = "360";
 
 			Sensitivity = 1.0f;
-			LowerDeadZone = 0.3f;
+			LowerDeadZone = 0.2f;
 
 			ButtonMappings = new[]
 			{
@@ -158,14 +158,16 @@ namespace InControl
 					Handle = "Left Trigger",
 					Target = InputControlType.LeftTrigger,
 					Source = Analog4,
-					TargetRange = InputControlMapping.Range.Positive
+					TargetRange = InputControlMapping.Range.Positive,
+					IgnoreInitialZeroValue = true
 				},
 				new InputControlMapping
 				{
 					Handle = "Right Trigger",
 					Target = InputControlType.RightTrigger,
 					Source = Analog5,
-					TargetRange = InputControlMapping.Range.Positive
+					TargetRange = InputControlMapping.Range.Positive,
+					IgnoreInitialZeroValue = true
 				}
 			};
 		}

@@ -12,18 +12,18 @@ namespace InControl
 		{
 			Name = "Apple MFi Controller";
 			Meta = "Apple MFi Controller on iOS";
-			
+
 			SupportedPlatforms = new[]
 			{
-				"iPhone"			
+				"iPhone"
 			};
-			
-			RegexName = ""; // Match anything.
-			
+
+			LastResortRegex = ""; // Match anything.
+
 			Sensitivity = 1.0f;
 			LowerDeadZone = 0.05f;
 			UpperDeadZone = 0.95f;
-			
+
 			ButtonMappings = new[]
 			{
 				new InputControlMapping
@@ -105,7 +105,7 @@ namespace InControl
 					Source = Button11
 				}
 			};
-			
+
 			AnalogMappings = new[]
 			{
 				new InputControlMapping
@@ -118,7 +118,8 @@ namespace InControl
 				{
 					Handle = "Left Stick Y",
 					Target = InputControlType.LeftStickY,
-					Source = Analog1
+					Source = Analog1,
+					Invert = true
 				},
 				new InputControlMapping
 				{
@@ -130,7 +131,8 @@ namespace InControl
 				{
 					Handle = "Right Stick Y",
 					Target = InputControlType.RightStickY,
-					Source = Analog3
+					Source = Analog3,
+					Invert = true
 				}
 			};
 		}

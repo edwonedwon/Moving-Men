@@ -12,19 +12,19 @@ namespace InControl
 		public const int MaxButtons = 20;
 		public const int MaxAnalogs = 20;
 
-		public int JoystickId { get; private set; }
+		internal int JoystickId { get; private set; }
 		public UnityInputDeviceProfile Profile { get; protected set; }
 
 
 		public UnityInputDevice( UnityInputDeviceProfile profile, int joystickId )
-			: base( profile.Name, profile.AnalogMappings.Length, profile.ButtonMappings.Length )
+			: base( profile.Name )
 		{
 			Initialize( profile, joystickId );
 		}
 
 
 		public UnityInputDevice( UnityInputDeviceProfile profile )
-			: base( profile.Name, profile.AnalogMappings.Length, profile.ButtonMappings.Length )
+			: base( profile.Name )
 		{
 			Initialize( profile, 0 );
 		}
@@ -35,14 +35,22 @@ namespace InControl
 			Profile = profile;
 			Meta = Profile.Meta;
 
-			foreach (var analogMapping in Profile.AnalogMappings)
+			var analogMappingCount = Profile.AnalogCount;
+			for (int i = 0; i < analogMappingCount; i++)
 			{
-				AddAnalogControl( analogMapping.Target, analogMapping.Handle );
+				var analogMapping = Profile.AnalogMappings[i];
+				var analogControl = AddControl( analogMapping.Target, analogMapping.Handle );
+
+				analogControl.Sensitivity = Profile.Sensitivity;
+				analogControl.UpperDeadZone = Profile.UpperDeadZone;
+				analogControl.LowerDeadZone = Profile.LowerDeadZone;
 			}
 
-			foreach (var buttonMapping in Profile.ButtonMappings)
+			var buttonMappingCount = Profile.ButtonCount;
+			for (int i = 0; i < buttonMappingCount; i++)
 			{
-				AddButtonControl( buttonMapping.Target, buttonMapping.Handle );
+				var buttonMapping = Profile.ButtonMappings[i];
+				AddControl( buttonMapping.Target, buttonMapping.Handle );
 			}
 
 			JoystickId = joystickId;
@@ -54,93 +62,68 @@ namespace InControl
 		}
 
 
-		public override void Update( float updateTime, float deltaTime )
+		public override void Update( ulong updateTick, float deltaTime )
 		{
 			if (Profile == null)
 			{
 				return;
 			}
 
-			var analogMappingCount = Profile.AnalogMappings.Length;
+			// Preprocess all analog values.
+			var analogMappingCount = Profile.AnalogCount;
 			for (int i = 0; i < analogMappingCount; i++)
 			{
 				var analogMapping = Profile.AnalogMappings[i];
-				var unityValue = analogMapping.Source.GetValue( this );
+				var targetControl = GetControl( analogMapping.Target );
 
-				if (!analogMapping.Raw)
+				var analogValue = analogMapping.Source.GetValue( this );
+
+				if (analogMapping.IgnoreInitialZeroValue &&
+				    targetControl.UpdateTick == 0 &&
+				    Mathf.Abs(analogValue) < Mathf.Epsilon)
 				{
-
-					if (analogMapping.TargetRangeIsNotComplete &&
-						Mathf.Abs(unityValue) < Mathf.Epsilon &&
-						Analogs[i].UpdateTime < Mathf.Epsilon)
-					{
-						// Ignore initial input stream for triggers, because they report
-						// zero incorrectly until the value changes for the first time.
-						// Example: wired Xbox controller on Mac.
-						continue;
-					}
-
-					unityValue = ApplyDeadZone( unityValue );
-					unityValue = analogMapping.MapValue( unityValue );
-					unityValue = SmoothAnalogValue( unityValue, Analogs[i].LastValue, deltaTime );
-
-					Analogs[i].UpdateWithValue( unityValue, updateTime );
+					targetControl.RawValue = null;
+					targetControl.PreValue = null;
 				}
 				else
-				{
-					Analogs[i].UpdateWithValue( unityValue, updateTime );
+				{		
+					var mappedValue = analogMapping.MapValue( analogValue );
+
+					// TODO: This can surely be done in a more elegant fashion.
+					if (analogMapping.Raw)
+					{
+						targetControl.RawValue = Combine( targetControl.RawValue, mappedValue );
+					}
+					else
+					{
+						targetControl.PreValue = Combine( targetControl.PreValue, mappedValue );
+					}
 				}
 			}
 
-			var buttonMappingCount = Profile.ButtonMappings.Length;
+
+			// Buttons are easy: just update the control state.
+			var buttonMappingCount = Profile.ButtonCount;
 			for (int i = 0; i < buttonMappingCount; i++)
 			{
 				var buttonMapping = Profile.ButtonMappings[i];
 				var buttonState = buttonMapping.Source.GetState( this );
 
-				Buttons[i].UpdateWithState( buttonState, updateTime );
+				UpdateWithState( buttonMapping.Target, buttonState, updateTick );
 			}
 		}
 
 
-		float ApplyDeadZone( float value )
+		float Combine( float? value1, float value2 )
 		{
-			// Make sure the value is sane.
-			value = Mathf.Clamp( value, -1.0f, 1.0f );
-
-			if (Profile.IsJoystick)
+			if (value1.HasValue)
 			{
-				// Apply dead zones.
-				return Mathf.InverseLerp( Profile.LowerDeadZone, Profile.UpperDeadZone, Mathf.Abs( value ) ) * Mathf.Sign( value );
+				return Mathf.Abs( value1.Value ) > Mathf.Abs( value2 ) ? value1.Value : value2;
 			}
-
-			return value;
-		}
-
-
-		float SmoothAnalogValue( float thisValue, float lastValue, float deltaTime )
-		{
-			if (Profile.IsJoystick)
+			else
 			{
-				// 1.0f and above is instant (no smoothing).
-				if (Mathf.Approximately( Profile.Sensitivity, 1.0f ))
-				{
-					return thisValue;
-				}
-
-				// Apply sensitivity (how quickly the value adapts to changes).
-				var maxDelta = deltaTime * Profile.Sensitivity * 100.0f;
-
-				// Snap to zero when changing direction quickly.
-				if (Mathf.Sign( lastValue ) != Mathf.Sign( thisValue ))
-				{
-					lastValue = 0.0f;
-				}
-
-				return Mathf.MoveTowards( lastValue, thisValue, maxDelta );
+				return value2;
 			}
-
-			return thisValue;
 		}
 
 
@@ -154,5 +137,12 @@ namespace InControl
 		{
 			get { return Profile.IsSupportedOnThisPlatform; }
 		}
+
+
+		public override bool IsKnown
+		{
+			get { return Profile.IsKnown; }
+		}
 	}
 }
+

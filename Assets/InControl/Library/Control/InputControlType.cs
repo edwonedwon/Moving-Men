@@ -4,17 +4,17 @@ using System;
 namespace InControl
 {
 	// TODO: This should be renamed to InputControlTarget.
-	public enum InputControlType
+	public enum InputControlType : int
 	{
 		// Standardized.
 		//
 		LeftStickX,
 		LeftStickY,
-		LeftStickButton,
+		LeftStickButton, // TODO: This may be non-standard?
 
 		RightStickX,
 		RightStickY,
-		RightStickButton,
+		RightStickButton, // TODO: This may be non-standard?
 
 		DPadUp,
 		DPadDown,
@@ -41,6 +41,7 @@ namespace InControl
 		System,
 		Pause,
 		Menu,
+		Share,
 		TiltX,
 		TiltY,
 		TiltZ,
@@ -93,6 +94,7 @@ namespace InControl
 		Button17,
 		Button18,
 		Button19,
+
 
 		// Internal. Must be last.
 		//

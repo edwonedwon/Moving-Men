@@ -234,46 +234,46 @@ public class UIKeyNavigation : MonoBehaviour
 		return go.transform.position;
 	}
 
-//	protected virtual void OnKey (KeyCode key)
-//	{
-//		if (!NGUITools.GetActive(this)) return;
-//
-//		GameObject go = null;
-//
-//		switch (key)
-//		{
-//		case KeyCode.LeftArrow:
-//			go = GetLeft();
-//			break;
-//		case KeyCode.RightArrow:
-//			go = GetRight();
-//			break;
-//		case KeyCode.UpArrow:
-//			go = GetUp();
-//			break;
-//		case KeyCode.DownArrow:
-//			go = GetDown();
-//			break;
-//		case KeyCode.Tab:
-//			if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
-//			{
-//				go = GetLeft();
-//				if (go == null) go = GetUp();
-//				if (go == null) go = GetDown();
-//				if (go == null) go = GetRight();
-//			}
-//			else
-//			{
-//				go = GetRight();
-//				if (go == null) go = GetDown();
-//				if (go == null) go = GetUp();
-//				if (go == null) go = GetLeft();
-//			}
-//			break;
-//		}
-//
-//		if (go != null) UICamera.selectedObject = go;
-//	}
+	protected virtual void OnKey (KeyCode key)
+	{
+		if (!NGUITools.GetActive(this)) return;
+
+		GameObject go = null;
+
+		switch (key)
+		{
+		case KeyCode.LeftArrow:
+			go = GetLeft();
+			break;
+		case KeyCode.RightArrow:
+			go = GetRight();
+			break;
+		case KeyCode.UpArrow:
+			go = GetUp();
+			break;
+		case KeyCode.DownArrow:
+			go = GetDown();
+			break;
+		case KeyCode.Tab:
+			if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+			{
+				go = GetLeft();
+				if (go == null) go = GetUp();
+				if (go == null) go = GetDown();
+				if (go == null) go = GetRight();
+			}
+			else
+			{
+				go = GetRight();
+				if (go == null) go = GetDown();
+				if (go == null) go = GetUp();
+				if (go == null) go = GetLeft();
+			}
+			break;
+		}
+
+		if (go != null) UICamera.selectedObject = go;
+	}
 
 	protected virtual void OnClick ()
 	{

@@ -35,25 +35,10 @@ public class PauseControlManager : MonoBehaviour {
 //			Debug.Log ("dpad down");
 			if(canPressPause == true && pauseEnabled == true)
 			{
-				// end pause
-				GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-				foreach (GameObject player in players)
-				{
-					player.SendMessage("ResetPlayerInput");
-				}
-				pauseEnabled = false;
-				canPressPause = false;
-				UIRoot.GetComponent<TweenAlpha>().PlayReverse();
-				UIRoot.SetActive(false);
-				Time.timeScale = 1;
+				EndPause();
 			} else if (canPressPause == true && pauseEnabled == false)
 			{
-				// begin pause
-				UIRoot.gameObject.SetActive(true);
-				pauseEnabled = true;
-				canPressPause = false;
-				UIRoot.gameObject.GetComponent<TweenAlpha>().PlayForward();
-				Time.timeScale = 0;
+				BeginPause();
 			}
 		}
 
@@ -62,5 +47,49 @@ public class PauseControlManager : MonoBehaviour {
 //			Debug.Log ("dpad up");
 			canPressPause = true;
 		}
+
+		// a way to pause without a controller
+		if(Input.GetKeyDown(KeyCode.P))
+		{
+			if(canPressPause == true && pauseEnabled == true)
+			{
+				EndPause();
+			} else if (canPressPause == true && pauseEnabled == false)
+			{
+				BeginPause();
+			}
+		}
 	}
+
+	void BeginPause ()
+	{
+		// BEGIN PAUSE
+		UIRoot.gameObject.SetActive(true);
+		pauseEnabled = true;
+		canPressPause = false;
+		UIRoot.gameObject.GetComponent<TweenAlpha>().PlayForward();
+		Time.timeScale = 0;
+	}
+	
+	void EndPause ()
+	{
+		// END PAUSE
+		
+		// reset incontrol profile if needed
+		GameObject.Find("GameManager").SendMessage("ChangeInputProfile");
+		
+		// reset incontrol on players
+		GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+		foreach (GameObject player in players)
+		{
+			player.SendMessage("ResetPlayerInput");
+		}
+		
+		pauseEnabled = false;
+		canPressPause = false;
+		UIRoot.GetComponent<TweenAlpha>().PlayReverse();
+		UIRoot.SetActive(false);
+		Time.timeScale = 1;
+	}
+
 }

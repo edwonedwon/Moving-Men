@@ -18,6 +18,7 @@ public class PauseMenuManager : MonoBehaviour {
 	public string levelValue;
 
 	GameManager gm;
+	InControlManager icm; 
 
 	void Start ()
 	{
@@ -32,6 +33,7 @@ public class PauseMenuManager : MonoBehaviour {
 		EventDelegate.Add(levelPopupList.onChange, ChangeLevel);
 
 		gm = GameObject.Find("GameManager").GetComponent<GameManager>();
+		icm = gm.transform.GetComponent<InControlManager>();
 
 	}
 	
@@ -46,11 +48,18 @@ public class PauseMenuManager : MonoBehaviour {
 			{
 //				Debug.Log ("Controller Mode: " + "1 Controller");
 				gm.singlePlayer = true;
+				icm.useKeyboard = false;
 			}
 			if (controllerValue == "2 Controllers")
 			{
 //				Debug.Log ("Controller Mode: " + "2 Controllers");
 				gm.singlePlayer = false;
+				icm.useKeyboard = false;
+			}
+			if (controllerValue == "Keyboard")
+			{
+				gm.singlePlayer = true;
+				icm.useKeyboard = true;
 			}
 		}
 

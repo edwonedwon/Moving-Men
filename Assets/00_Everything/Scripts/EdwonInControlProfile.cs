@@ -72,6 +72,12 @@ namespace InControl
 					Handle = "Left Bumper",
 					Target = InputControlType.LeftBumper,
 					Source = KeyCodeButton(KeyCode.LeftCommand)
+				},
+				new InputControlMapping
+				{
+					Handle = "DPadDown",
+					Target = InputControlType.DPadDown,
+					Source = KeyCodeButton(KeyCode.P)
 				}
 
 

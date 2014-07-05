@@ -11,15 +11,18 @@ public class InControlManager : MonoBehaviour
 		InputManager.Setup();
 //		Debug.Log( "InControl (version " + InputManager.Version + ")" );
 
-		// Add a custom device profile.
+		ChangeInputProfile ();
+	}
+
+	public void ChangeInputProfile ()
+	{
 		if (useKeyboard)
 		{
 			print ("using keyboard");
 			InputManager.AttachDevice( new UnityInputDevice( new EdwonInControlProfile() ) );
 		}
+
 	}
-
-
 
 
 	void Update()

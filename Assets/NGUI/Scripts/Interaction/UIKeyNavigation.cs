@@ -4,6 +4,7 @@
 //----------------------------------------------
 
 using UnityEngine;
+using InControl;
 
 /// <summary>
 /// Attaching this script to a widget makes it react to key events such as tab, up, down, etc.
@@ -12,11 +13,76 @@ using UnityEngine;
 [AddComponentMenu("NGUI/Interaction/Key Navigation")]
 public class UIKeyNavigation : MonoBehaviour
 {
+
 	/// <summary>
 	/// List of all the active UINavigation components.
 	/// </summary>
+	InputDevice inputDevice;
 
 	static public BetterList<UIKeyNavigation> list = new BetterList<UIKeyNavigation>();
+
+	bool canPressLeft = true;
+	bool canPressRight = true;
+	bool canPressUp = true;
+	bool canPressDown = true;
+
+	void Update()
+	{
+		InputManager.Update();
+		inputDevice = InputManager.ActiveDevice;
+
+		UpdateInControlLogic ();
+
+	}
+
+	void UpdateInControlLogic ()
+	{
+
+		GameObject go = null;
+		
+		if (canPressLeft == true && inputDevice.LeftStickX < -0.9f)
+		{
+			canPressLeft = false;
+			Debug.Log ("left: " + gameObject.name);
+			go = GetLeft();
+		}
+		
+		if (canPressRight == true && inputDevice.LeftStickX > 0.9f)
+		{
+			canPressRight = false;
+			Debug.Log ("right: " + gameObject.name);
+			go = GetRight();
+		}
+		
+		if (canPressUp == true && inputDevice.LeftStickY > 0.95f)
+		{
+			canPressUp = false;
+			Debug.Log ("up: " + gameObject.name);
+			go = GetUp();
+		}
+		
+		if (canPressDown == true && inputDevice.LeftStickY < -0.95f)
+		{
+			canPressDown = false;
+			Debug.Log ("down: " + gameObject.name);
+			go = GetDown();
+		}
+		
+		if (inputDevice.LeftStickY == 0)
+		{
+			canPressUp = true;
+			canPressDown = true;
+		}
+		
+		if (inputDevice.LeftStickX == 0)
+		{
+			canPressLeft = true;
+			canPressRight = true;
+		}
+		
+		if (go != null) UICamera.selectedObject = go;
+
+	}
 
 	public enum Constraint
 	{
@@ -72,6 +138,9 @@ public class UIKeyNavigation : MonoBehaviour
 
 	protected virtual void OnEnable ()
 	{
+
+		InputManager.Setup();
+
 		list.Add(this);
 
 		if (startsSelected)
@@ -165,46 +234,46 @@ public class UIKeyNavigation : MonoBehaviour
 		return go.transform.position;
 	}
 
-	protected virtual void OnKey (KeyCode key)
-	{
-		if (!NGUITools.GetActive(this)) return;
-
-		GameObject go = null;
-
-		switch (key)
-		{
-		case KeyCode.LeftArrow:
-			go = GetLeft();
-			break;
-		case KeyCode.RightArrow:
-			go = GetRight();
-			break;
-		case KeyCode.UpArrow:
-			go = GetUp();
-			break;
-		case KeyCode.DownArrow:
-			go = GetDown();
-			break;
-		case KeyCode.Tab:
-			if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
-			{
-				go = GetLeft();
-				if (go == null) go = GetUp();
-				if (go == null) go = GetDown();
-				if (go == null) go = GetRight();
-			}
-			else
-			{
-				go = GetRight();
-				if (go == null) go = GetDown();
-				if (go == null) go = GetUp();
-				if (go == null) go = GetLeft();
-			}
-			break;
-		}
-
-		if (go != null) UICamera.selectedObject = go;
-	}
+//	protected virtual void OnKey (KeyCode key)
+//	{
+//		if (!NGUITools.GetActive(this)) return;
+//
+//		GameObject go = null;
+//
+//		switch (key)
+//		{
+//		case KeyCode.LeftArrow:
+//			go = GetLeft();
+//			break;
+//		case KeyCode.RightArrow:
+//			go = GetRight();
+//			break;
+//		case KeyCode.UpArrow:
+//			go = GetUp();
+//			break;
+//		case KeyCode.DownArrow:
+//			go = GetDown();
+//			break;
+//		case KeyCode.Tab:
+//			if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+//			{
+//				go = GetLeft();
+//				if (go == null) go = GetUp();
+//				if (go == null) go = GetDown();
+//				if (go == null) go = GetRight();
+//			}
+//			else
+//			{
+//				go = GetRight();
+//				if (go == null) go = GetDown();
+//				if (go == null) go = GetUp();
+//				if (go == null) go = GetLeft();
+//			}
+//			break;
+//		}
+//
+//		if (go != null) UICamera.selectedObject = go;
+//	}
 
 	protected virtual void OnClick ()
 	{

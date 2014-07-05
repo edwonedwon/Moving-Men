@@ -1,8 +1,9 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/00_Everything/Scripts/RespawnManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/00_Everything/Scripts/PauseControlManager.cs">
     <Files>
-      <File FileName="Assets/00_Everything/Scripts/RespawnManager.cs" Line="7" Column="3" />
+      <File FileName="Assets/00_Everything/Scripts/RespawnManager.cs" Line="69" Column="4" />
+      <File FileName="Assets/00_Everything/Scripts/PauseControlManager.cs" Line="13" Column="26" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

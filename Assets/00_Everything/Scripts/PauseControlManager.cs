@@ -9,6 +9,8 @@ public class PauseControlManager : MonoBehaviour {
 
 	private bool pauseEnabled;
 	private bool canPressPause;
+
+	public bool mainMenuMode = false;
 	
 	InputDevice inputDevice;
 
@@ -20,8 +22,14 @@ public class PauseControlManager : MonoBehaviour {
 		canPressPause = true;
 		Time.timeScale = 1;
 		UIRoot = transform.GetChild(0).gameObject;
+		InputManager.Setup();
+
+		if(mainMenuMode)
+			MainMenuSetup();
+		else
+			transform.GetComponent<UIPanel>().alpha = 1;
 	}
-	
+
 	void Update () 
 	{
 //		Debug.Log("pauseEnabled = " + pauseEnabled);
@@ -30,7 +38,7 @@ public class PauseControlManager : MonoBehaviour {
 		InputManager.Update();
 		inputDevice = InputManager.ActiveDevice;
 
-		if(inputDevice.DPadDown)
+		if(inputDevice.DPadDown && !mainMenuMode)
 		{
 //			Debug.Log ("dpad down");
 			if(canPressPause == true && pauseEnabled == true)
@@ -42,14 +50,14 @@ public class PauseControlManager : MonoBehaviour {
 			}
 		}
 
-		if(inputDevice.DPadDown == false)
+		if(inputDevice.DPadDown == false && !mainMenuMode)
 		{
 //			Debug.Log ("dpad up");
 			canPressPause = true;
 		}
 
 		// a way to pause without a controller
-		if(Input.GetKeyDown(KeyCode.P))
+		if(Input.GetKeyDown(KeyCode.P) && !mainMenuMode)
 		{
 			if(canPressPause == true && pauseEnabled == true)
 			{
@@ -90,6 +98,15 @@ public class PauseControlManager : MonoBehaviour {
 		UIRoot.GetComponent<TweenAlpha>().PlayReverse();
 		UIRoot.SetActive(false);
 		Time.timeScale = 1;
+	}
+
+	void MainMenuSetup ()
+	{
+		UIRoot.SetActive(true);
+		UIRoot.GetComponent<UIPanel>().alpha = 1;
+		transform.GetComponent<UIPanel>().alpha = 1;
+		GameObject.Find("BG - Vignette").SetActive(false);
+		GameObject.Find("Instructions").SetActive(false);
 	}
 
 }

@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour {
 
 	void Start () 
 	{
+		Screen.showCursor = false;
 		// debug view is off disable debug camera
 		if (!debugView)
 			GameObject.Find ("DebugCamera").gameObject.SetActive(false);

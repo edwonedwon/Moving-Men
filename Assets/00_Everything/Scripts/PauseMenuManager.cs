@@ -27,8 +27,13 @@ public class PauseMenuManager : MonoBehaviour {
 
 	void OnEnable () 
 	{
-		controllersPopupList = transform.FindChild("Controls").FindChild("Dropdown - Controllers").GetComponent<UIPopupList>();
-		levelPopupList = transform.FindChild("Controls").FindChild("Dropdown - Level Select").GetComponent<UIPopupList>();
+		controllersPopupList = transform.FindChild("Controls")
+			.FindChild("Bottom Left Anchor")
+			.FindChild("Dropdown - Controllers").GetComponent<UIPopupList>();
+		levelPopupList = transform.FindChild("Controls")
+			.FindChild("Bottom Right Anchor")
+			.FindChild("Dropdown - Level Select")
+			.GetComponent<UIPopupList>();
 		EventDelegate.Add(controllersPopupList.onChange, ChangeControllers);
 		EventDelegate.Add(levelPopupList.onChange, ChangeLevel);
 

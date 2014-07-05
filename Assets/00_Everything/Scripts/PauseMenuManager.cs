@@ -21,7 +21,7 @@ public class PauseMenuManager : MonoBehaviour {
 
 	void Start ()
 	{
-
+		levelPopupList.value = Application.loadedLevelName;
 	}
 
 	void OnEnable () 
@@ -62,7 +62,10 @@ public class PauseMenuManager : MonoBehaviour {
 //			Debug.Log ("Load Level: " + levelValue);
 
 			if (levelValue != Application.loadedLevelName) 		// if selected a new level
+			{
+
 				Application.LoadLevel(levelValue);
+			}
 		}
 	}
 

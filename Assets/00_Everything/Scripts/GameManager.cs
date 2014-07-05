@@ -18,7 +18,16 @@ public class GameManager : MonoBehaviour {
 	
 	void Update () 
 	{
-		
+		if (Input.GetKey(KeyCode.C))
+		{
+			GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+			foreach (GameObject player in players)
+			{
+				player.SendMessage("ResetPlayerInput");
+			}
+		}
 	}
+
+
 	
 }

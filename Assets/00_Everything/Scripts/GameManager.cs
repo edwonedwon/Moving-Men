@@ -18,14 +18,6 @@ public class GameManager : MonoBehaviour {
 	
 	void Update () 
 	{
-		// inControl setup
-		InputManager.Update();
-		inputDevice = InputManager.ActiveDevice;
-		// if press up on dpad reload level
-		if(inputDevice.DPadUp)
-		{
-			Application.LoadLevel(0);
-		}
 		
 	}
 	

@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+// this script connects the NGUI stuff to the actual values in the scene
+// when you change something in the pause menu
+
 public class PauseMenuManager : MonoBehaviour {
 
 	UIPopupList controllersPopupList;
@@ -83,7 +86,7 @@ public class PauseMenuManager : MonoBehaviour {
 	{
 		if (startUpCheckLevel == true)
 		{
-			Debug.Log("changed level");
+//			Debug.Log("changed level");
 			canChangeLevel = true;
 			levelValue = UIPopupList.current.value;
 	//		Debug.Log ("Level Selection: " + levelValue);

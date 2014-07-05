@@ -12,11 +12,14 @@ public class PauseControlManager : MonoBehaviour {
 	
 	InputDevice inputDevice;
 
+	GameObject UIRoot;
+
 	void Start () 
 	{
 		pauseEnabled = false;
 		canPressPause = true;
 		Time.timeScale = 1;
+		UIRoot = transform.GetChild(0).gameObject;
 	}
 	
 	void Update () 
@@ -33,16 +36,23 @@ public class PauseControlManager : MonoBehaviour {
 			if(canPressPause == true && pauseEnabled == true)
 			{
 				// end pause
+				GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+				foreach (GameObject player in players)
+				{
+					player.SendMessage("ResetPlayerInput");
+				}
 				pauseEnabled = false;
 				canPressPause = false;
-				gameObject.GetComponent<TweenAlpha>().PlayReverse();
+				UIRoot.GetComponent<TweenAlpha>().PlayReverse();
+				UIRoot.SetActive(false);
 				Time.timeScale = 1;
 			} else if (canPressPause == true && pauseEnabled == false)
 			{
 				// begin pause
+				UIRoot.gameObject.SetActive(true);
 				pauseEnabled = true;
 				canPressPause = false;
-				gameObject.GetComponent<TweenAlpha>().PlayForward();
+				UIRoot.gameObject.GetComponent<TweenAlpha>().PlayForward();
 				Time.timeScale = 0;
 			}
 		}

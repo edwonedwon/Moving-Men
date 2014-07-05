@@ -59,6 +59,11 @@ public class PlayerMove : MonoBehaviour
 //		Debug.Log(inputDevice.Name);
 	}
 
+	public void ResetPlayerInput ()
+	{	
+		inputDevice = GetInputDevice();
+	}
+
 	//setup
 	void Awake()
 	{	

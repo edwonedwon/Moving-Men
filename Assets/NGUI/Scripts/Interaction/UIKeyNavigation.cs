@@ -29,7 +29,7 @@ public class UIKeyNavigation : MonoBehaviour
 	void Update()
 	{
 		InputManager.Update();
-		inputDevice = InputManager.ActiveDevice;
+		inputDevice = InputManager.Devices[0];
 
 		UpdateInControlLogic ();
 
@@ -43,28 +43,28 @@ public class UIKeyNavigation : MonoBehaviour
 		if (canPressLeft == true && inputDevice.LeftStickX < -0.9f)
 		{
 			canPressLeft = false;
-			Debug.Log ("left: " + gameObject.name);
+//			Debug.Log ("left: " + gameObject.name);
 			go = GetLeft();
 		}
 		
 		if (canPressRight == true && inputDevice.LeftStickX > 0.9f)
 		{
 			canPressRight = false;
-			Debug.Log ("right: " + gameObject.name);
+//			Debug.Log ("right: " + gameObject.name);
 			go = GetRight();
 		}
 		
 		if (canPressUp == true && inputDevice.LeftStickY > 0.95f)
 		{
 			canPressUp = false;
-			Debug.Log ("up: " + gameObject.name);
+//			Debug.Log ("up: " + gameObject.name);
 			go = GetUp();
 		}
 		
 		if (canPressDown == true && inputDevice.LeftStickY < -0.95f)
 		{
 			canPressDown = false;
-			Debug.Log ("down: " + gameObject.name);
+//			Debug.Log ("down: " + gameObject.name);
 			go = GetDown();
 		}
 		

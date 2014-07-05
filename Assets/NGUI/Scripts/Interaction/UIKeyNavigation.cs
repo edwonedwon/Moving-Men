@@ -26,10 +26,15 @@ public class UIKeyNavigation : MonoBehaviour
 	bool canPressUp = true;
 	bool canPressDown = true;
 
+	void Awake()
+	{
+		inputDevice = InputManager.ActiveDevice;
+
+	}
+
 	void Update()
 	{
 		InputManager.Update();
-		inputDevice = InputManager.Devices[0];
 
 		UpdateInControlLogic ();
 

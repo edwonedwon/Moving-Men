@@ -13,7 +13,10 @@ public class DebugManager : MonoBehaviour {
 			gameObject.GetComponent<RespawnManager>().enabled = true;
 		} else{
 			gameObject.GetComponent<RespawnManager>().enabled = false;
-		}
+		} 
+
+		if (Application.loadedLevelName == "Main Menu")
+			gameObject.GetComponent<RespawnManager>().enabled = false;
 
 		// debug view is off disable debug camera
 		if (!debugView)

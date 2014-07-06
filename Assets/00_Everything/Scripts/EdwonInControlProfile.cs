@@ -78,9 +78,25 @@ namespace InControl
 					Handle = "DPadDown",
 					Target = InputControlType.DPadDown,
 					Source = KeyCodeButton(KeyCode.P)
+				},
+				new InputControlMapping
+				{
+					Handle = "DPadLeft",
+					Target = InputControlType.DPadLeft,
+					Source = KeyCodeButton(KeyCode.J)
+				},
+				new InputControlMapping
+				{
+					Handle = "DPadRight",
+					Target = InputControlType.DPadRight,
+					Source = KeyCodeButton(KeyCode.L)
+				},
+				new InputControlMapping
+				{
+					Handle = "DPadUp",
+					Target = InputControlType.DPadUp,
+					Source = KeyCodeButton(KeyCode.I)
 				}
-
-
 			};
 
 			AnalogMappings = new[]

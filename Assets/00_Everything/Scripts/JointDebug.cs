@@ -7,18 +7,20 @@ public class JointDebug : MonoBehaviour {
 
 	ConfigurableJoint joint;
 	GameManager gameManager;
+	DebugManager debugManager;
 
 	void Start () 
 	{
 
 		joint = GetComponent<ConfigurableJoint>();
 		gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+		debugManager = GameObject.Find("DebugManager").GetComponent<DebugManager>();
 		connectedAnchorSphere = (GameObject)Instantiate(Resources.Load("DebugSphere"));
 	}
 	
 	void Update () 
 	{
-		if (gameManager.debugView)
+		if (debugManager.debugView)
 		{
 			DebugViewUpdate();
 		}

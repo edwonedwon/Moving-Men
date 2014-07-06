@@ -4,6 +4,8 @@ using System.Collections;
 public class DebugManager : MonoBehaviour {
 
 	public bool debugMode;
+	public bool debugView;
+
 
 	void Start () {
 		if (debugMode)
@@ -12,6 +14,10 @@ public class DebugManager : MonoBehaviour {
 		} else{
 			gameObject.GetComponent<RespawnManager>().enabled = false;
 		}
+
+		// debug view is off disable debug camera
+		if (!debugView)
+			GameObject.Find ("DebugCamera").gameObject.SetActive(false);
 	}
 	
 	void Update () {

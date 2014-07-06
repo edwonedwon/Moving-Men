@@ -1,10 +1,9 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/CustomerManager.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/00_Everything/Scripts/GameManager.cs">
     <Files>
-      <File FileName="Assets/00_Everything/Scripts/GripTimer.cs" Line="13" Column="30" />
-      <File FileName="Assets/00_Everything/Scripts/PlayerGrab.cs" Line="143" Column="32" />
-      <File FileName="Assets/CustomerManager.cs" Line="20" Column="3" />
+      <File FileName="Assets/00_Everything/Scripts/DebugManager.cs" Line="20" Column="64" />
+      <File FileName="Assets/00_Everything/Scripts/GameManager.cs" Line="19" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -8,7 +8,10 @@ using System.Collections;
 public class DamageDetector : MonoBehaviour {
 
 	public string hudPathDamaged;
-	public string hudPathBumped;
+	public float damageBill;
+//	public string hudPathBumped;
+//	public float bumpBill;
+
 	private GameObject cm; // customer manager
 
 	void Start () 
@@ -25,13 +28,15 @@ public class DamageDetector : MonoBehaviour {
 	{
 		if (collision.collider.tag == "Ground")
 		{
-			Debug.Log ("Plank Touched Ground");
 			cm.SendMessage("ShowHudElement", hudPathDamaged);
+			cm.SendMessage("LoseMoney", damageBill);
 		}
-		if (collision.collider.tag == "Stage")
-		{
-			Debug.Log ("Plank Touched Stage");
-			cm.SendMessage("ShowHudElement", hudPathBumped);
-		}
+
+//		if (collision.collider.tag == "Stage")
+//		{
+//			Debug.Log ("Plank Touched Stage");
+//			cm.SendMessage("ShowHudElement", hudPathBumped);
+//			cm.SendMessage("LoseMoney", bumpBill);
+//		}
 	}
 }

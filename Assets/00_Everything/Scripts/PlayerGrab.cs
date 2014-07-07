@@ -6,6 +6,7 @@ public class PlayerGrab : MonoBehaviour {
 
 	public string grabState; 
 	public Rigidbody grabThing;
+	public GameObject grabThingGO;
 	public GameObject grabZone;
 	public Material feedbackMaterial;
 	ConfigurableJoint joint;
@@ -38,6 +39,8 @@ public class PlayerGrab : MonoBehaviour {
 
 		UpdateControls();
 		HeadFeedback();
+
+		grabThingGO = grabThing.transform.gameObject;
 
 //		print (grabState);
 	

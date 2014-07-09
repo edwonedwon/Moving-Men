@@ -17,6 +17,8 @@ public class DamageDetector : MonoBehaviour {
 	void Start () 
 	{
 		cm = GameObject.Find ("CustomerManager");
+		if (cm == null)
+			GetComponent<DamageDetector>().enabled = false;
 	}
 	
 	void Update () 
@@ -26,12 +28,14 @@ public class DamageDetector : MonoBehaviour {
 
 	void OnCollisionEnter (Collision collision)
 	{
-		if (collision.collider.tag == "Ground")
+		if (cm != null)
 		{
-			cm.SendMessage("ShowHudElement", hudPathDamaged);
-			cm.SendMessage("LoseMoney", damageBill);
+			if (collision.collider.tag == "Ground")
+			{
+				cm.SendMessage("ShowHudElement", hudPathDamaged);
+				cm.SendMessage("LoseMoney", damageBill);
+			}
 		}
-
 //		if (collision.collider.tag == "Stage")
 //		{
 //			Debug.Log ("Plank Touched Stage");

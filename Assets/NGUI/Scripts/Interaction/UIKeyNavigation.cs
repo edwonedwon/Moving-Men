@@ -25,26 +25,44 @@ public class UIKeyNavigation : MonoBehaviour
 	bool canPressRight = true;
 	bool canPressUp = true;
 	bool canPressDown = true;
+	bool canPressAction3 = true;
 
 	void Awake()
 	{
-		inputDevice = InputManager.ActiveDevice;
 
 	}
 
 	void Update()
 	{
+
+	}
+
+	void FixedUpdate ()
+	{
+		inputDevice = InputManager.ActiveDevice;
 		InputManager.Update();
-
 		UpdateInControlLogic ();
-
+		if (inputDevice.Action3.IsPressed == true)
+		{
+			Debug.Log ("pressed button");
+		}
 	}
 
 	void UpdateInControlLogic ()
 	{
 
 		GameObject go = null;
-		
+		if (inputDevice.Action3.IsPressed == true)
+		{
+			Debug.Log ("pressed button");
+			canPressAction3 = false;
+		}
+//		if (inputDevice.Action3 == false)
+//		{
+//			Debug.Log ("inputDevice.Action3 == false");
+//			canPressAction3 = true;
+//		}
+
 		if (canPressLeft == true && inputDevice.LeftStickX < -0.9f)
 		{
 			canPressLeft = false;
@@ -145,7 +163,7 @@ public class UIKeyNavigation : MonoBehaviour
 	{
 
 		InputManager.Setup();
-
+		InputManager.OnDeviceAttached += inputDevice => Debug.Log( "Attached: " + inputDevice.Name );
 		list.Add(this);
 
 		if (startsSelected)
@@ -162,6 +180,7 @@ public class UIKeyNavigation : MonoBehaviour
 	}
 
 	protected virtual void OnDisable () { list.Remove(this); }
+
 
 	protected GameObject GetLeft ()
 	{

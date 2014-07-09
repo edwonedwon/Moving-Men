@@ -75,6 +75,7 @@ public class PauseControlManager : MonoBehaviour {
 		UIRoot.gameObject.SetActive(true);
 		pauseEnabled = true;
 		canPressPause = false;
+		EnablePlayerControls(false);
 		UIRoot.gameObject.GetComponent<TweenAlpha>().PlayForward();
 		Time.timeScale = 0;
 	}
@@ -92,12 +93,23 @@ public class PauseControlManager : MonoBehaviour {
 		{
 			player.SendMessage("ResetPlayerInput");
 		}
-		
+
+		EnablePlayerControls(true);
+
 		pauseEnabled = false;
 		canPressPause = false;
 		UIRoot.GetComponent<TweenAlpha>().PlayReverse();
 		UIRoot.SetActive(false);
 		Time.timeScale = 1;
+	}
+
+	void EnablePlayerControls (bool enable)
+	{
+		GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+		foreach (GameObject player in players)
+		{
+			player.transform.FindChild("GrabBox").GetComponent<PlayerGrab>().enabled = enable;
+		}
 	}
 
 	void MainMenuSetup ()

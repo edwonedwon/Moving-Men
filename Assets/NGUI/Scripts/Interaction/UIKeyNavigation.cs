@@ -163,7 +163,7 @@ public class UIKeyNavigation : MonoBehaviour
 	{
 
 		InputManager.Setup();
-		InputManager.OnDeviceAttached += inputDevice => Debug.Log( "Attached: " + inputDevice.Name );
+//		InputManager.OnDeviceAttached += inputDevice => Debug.Log( "Attached: " + inputDevice.Name );
 		list.Add(this);
 
 		if (startsSelected)

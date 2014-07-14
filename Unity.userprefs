@@ -1,9 +1,11 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/00_Everything/Scripts/AutoTransparent.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/HUD Text/Scripts/UIFollowTarget.cs">
     <Files>
-      <File FileName="Assets/00_Everything/Scripts/ClearSight.cs" Line="15" Column="1" />
-      <File FileName="Assets/00_Everything/Scripts/AutoTransparent.cs" Line="8" Column="36" />
+      <File FileName="Assets/00_Everything/Scripts/ClearSight.cs" Line="72" Column="23" />
+      <File FileName="Assets/00_Everything/Scripts/GameManager.cs" Line="24" Column="28" />
+      <File FileName="Assets/NGUI/Scripts/Interaction/UIKeyNavigation.cs" Line="166" Column="27" />
+      <File FileName="Assets/HUD Text/Scripts/UIFollowTarget.cs" Line="66" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -13,7 +13,8 @@ public class GameManager : MonoBehaviour {
 	void Start () 
 	{
 		Screen.showCursor = false;
-		hud = GameObject.Find("HUD").transform;
+		if(GameObject.Find ("HUD") != null)
+			hud = GameObject.Find("HUD").transform;
 
 	}
 	

@@ -34,18 +34,14 @@ public class UIKeyNavigation : MonoBehaviour
 
 	void Update()
 	{
-
+//		Debug.Log (inputDevice.LeftStickY);
+//		Debug.Log (inputDevice.LeftStickX);
 	}
 
 	void FixedUpdate ()
 	{
 		inputDevice = InputManager.ActiveDevice;
 		InputManager.Update();
-		UpdateInControlLogic ();
-		if (inputDevice.Action3.IsPressed == true)
-		{
-			Debug.Log ("pressed button");
-		}
 	}
 
 	void UpdateInControlLogic ()
@@ -63,31 +59,31 @@ public class UIKeyNavigation : MonoBehaviour
 //			canPressAction3 = true;
 //		}
 
-		if (canPressLeft == true && inputDevice.LeftStickX < -0.9f)
+		if (canPressLeft == true && UICamera.selectedObject == gameObject && inputDevice.LeftStickX < -0.75f)
 		{
 			canPressLeft = false;
-//			Debug.Log ("left: " + gameObject.name);
+			Debug.Log ("left: " + gameObject.name);
 			go = GetLeft();
 		}
 		
-		if (canPressRight == true && inputDevice.LeftStickX > 0.9f)
+		if (canPressRight == true && UICamera.selectedObject == gameObject && inputDevice.LeftStickX > 0.75f)
 		{
 			canPressRight = false;
-//			Debug.Log ("right: " + gameObject.name);
+			Debug.Log ("right: " + gameObject.name);
 			go = GetRight();
 		}
 		
-		if (canPressUp == true && inputDevice.LeftStickY > 0.95f)
+		if (canPressUp == true && UICamera.selectedObject == gameObject && inputDevice.LeftStickY > 0.75f)
 		{
 			canPressUp = false;
-//			Debug.Log ("up: " + gameObject.name);
+			Debug.Log ("up: " + gameObject.name);
 			go = GetUp();
 		}
 		
-		if (canPressDown == true && inputDevice.LeftStickY < -0.95f)
+		if (canPressDown == true && UICamera.selectedObject == gameObject && inputDevice.LeftStickY < -0.75f)
 		{
 			canPressDown = false;
-//			Debug.Log ("down: " + gameObject.name);
+			Debug.Log ("down: " + gameObject.name);
 			go = GetDown();
 		}
 		

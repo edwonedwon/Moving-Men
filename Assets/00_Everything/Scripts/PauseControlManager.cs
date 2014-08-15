@@ -117,8 +117,8 @@ public class PauseControlManager : MonoBehaviour {
 		UIRoot.SetActive(true);
 		UIRoot.GetComponent<UIPanel>().alpha = 1;
 		transform.GetComponent<UIPanel>().alpha = 1;
-		GameObject.Find("BG - Vignette").SetActive(false);
-		GameObject.Find("Instructions").SetActive(false);
+//		GameObject.Find("BG - Vignette").SetActive(false);
+//		GameObject.Find("Instructions").SetActive(false);
 	}
 
 }
